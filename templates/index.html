@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .progress {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            display: none; /* Hide by default */
+        }
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            color: white;
+            line-height: 30px;
+        }
+        #summary {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Summarization API</h1>
+    <form id="summarize-form" action="/summarize" method="post">
+        <label for="text">Enter text to summarize:</label><br>
+        <textarea id="text" name="text" rows="10" cols="50" required></textarea><br><br>
+        <input type="submit" value="Summarize">
+    </form>
+
+    <div class="progress">
+        <div class="progress-bar" id="progress-bar">Processing...</div>
+    </div>
+
+    {% if summary %}
+    <div id="summary">
+        <h2>Model Summary:</h2>
+        <p>{{ summary }}</p>
+    </div>
+    {% endif %}
+
+    <script>
+        document.getElementById('summarize-form').onsubmit = function() {
+            // Show the progress bar
+            document.querySelector('.progress').style.display = 'block';
+            let progressBar = document.getElementById('progress-bar');
+
+            // Simulate progress
+            let width = 0;
+            let interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 50); // Increase progress every 50ms
+
+            // Allow form to submit
+            return true;
+        };
+    </script>
+</body>
+</html>
